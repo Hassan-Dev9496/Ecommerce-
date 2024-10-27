@@ -3,10 +3,15 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import useStore , {IUser} from "@/store/user";
+import {setCookie} from 'cookies-next'
+import { useRouter } from "next/navigation";
+import ForgotPassword from "../ForgotPassword/forgot-password";
 
 export default function Login() {
 
   const [user, setUser] = useState({ email: "", password: "" });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter()
 
   const handleUserInputs = (e: any) => {
     const { name, value } = e.target;
@@ -31,9 +36,9 @@ export default function Login() {
         `http://127.0.0.1:8000/api/login/`,
         user,
       );
-      
       alert(response?.data?.message)
       if(response.status === 200){
+        setCookie('token' , response?.data?.user?.verification_token)
         useStore.setState({
           user:{
             id:response.data.user.id,
@@ -42,6 +47,7 @@ export default function Login() {
             is_verified:response.data.user.is_verified
           }
         })
+        router.push('/')
       }
     } catch (error) {
       console.log(error);
@@ -95,12 +101,12 @@ export default function Login() {
                     Password
                   </label>
                   <div className="text-sm">
-                    <a
-                      href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    <p
+                      onClick={() => setIsModalOpen(true)}
+                      className="font-semibold cursor-pointer text-indigo-600 hover:text-indigo-500"
                     >
                       Forgot password?
-                    </a>
+                    </p>
                   </div>
                 </div>
                 <div className="mt-2">
@@ -139,6 +145,7 @@ export default function Login() {
             </p>
           </div>
         </main>
+        {isModalOpen && <ForgotPassword isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
       </>
     );
   }

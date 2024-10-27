@@ -51,9 +51,6 @@ def Login(request):
 
     try:
         user = User.objects.get(email=email)
-        print(user , "user")
-        print("Stored password (hashed):", user.password)
-        print("Check password result with actual password:", check_password(password, user.password))  # Check with the input password
     except User.DoesNotExist:
         return Response({"error": "User does not exist"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -64,7 +61,33 @@ def Login(request):
         return Response({'message': 'Login Succeed', 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
     else:
         return Response({"error": "Invalid email or password"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def ForgotPassword(request):
+    email = request.data.get('email')
+    user = User.objects.filter(email=email).first()  
+    if user is None:
+        return Response({"error": "User does not exist"}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        verification_url = f"http://localhost:3000/reset-password/{user.verification_token}/"
+        send_mail(
+            'Verify your email',
+            f'Click the link to verify your email: {verification_url}',
+            settings.DEFAULT_FROM_EMAIL,
+            [email],
+            fail_silently=False,
+        )
+        return Response({'message': 'Verification link has been sent to the given email. Please click that link to reset your password.'}, status=status.HTTP_200_OK)
     
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+      
+    
+
+
+
 
 
 

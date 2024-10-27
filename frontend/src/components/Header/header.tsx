@@ -1,10 +1,12 @@
-"use client"
-import useStore from "@/store/user";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import AuthControls from "./Client/AuthControls";
 
-export default function Header(){
-    const user = useStore.getState().user
-    console.log(user , "user")
+
+
+export default async function Header(){
+    const cookieStore= await cookies()
+    const token = cookieStore.get("token")?.value || null
     return(
         <>
         <header className="bg-indigo-600 w-full p-5 flex justify-between">
@@ -13,9 +15,8 @@ export default function Header(){
                 <li>About</li>
                 <li>Products</li>
             </ul>
-            <div>
-                <Link href={'/login'}>{user ? "Logout" : "Login"}</Link>
-            </div>
+          <AuthControls token={token}/>
+            
         </header>
         </>
     )

@@ -14,7 +14,8 @@ type State={
 }
 
 type Actions={
-    setUser:(user:IUser | null)=>void
+    setUser:(user:IUser | null)=>void;
+    clearUser: () => void;
 }
 
 const useStore=create<State & Actions>()(
@@ -23,7 +24,10 @@ const useStore=create<State & Actions>()(
             user:null,
             setUser:(user:IUser | null)=>set((state)=>{
             state.user=user
-            })
+            }),
+            clearUser: () => set((state) => { 
+                state.user = null; 
+            }),
         })),
         {
             name:'user-storage',

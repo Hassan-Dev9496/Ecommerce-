@@ -7,10 +7,9 @@ interface StoreInitializerProps {
 }
 
 export default function StoreInitializer({ user }: StoreInitializerProps) {
-  console.log(user , "user in store initializer")
   useEffect(() => {
     useStore.setState({ user });
-  }, [user]); 
+  }, []); 
 
   return null; 
   

@@ -32,7 +32,7 @@ export default function RootLayout({
     
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          <StoreInitializer user={useStore.getState().user}/>
+          {/* <StoreInitializer user={useStore.getState().user}/> */}
         <Header/>
         {children}
       </body>
