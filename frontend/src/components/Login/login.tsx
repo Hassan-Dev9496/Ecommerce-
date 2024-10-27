@@ -2,6 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import useStore , {IUser} from "@/store/user";
 
 export default function Login() {
 
@@ -30,7 +31,18 @@ export default function Login() {
         `http://127.0.0.1:8000/api/login/`,
         user,
       );
+      
       alert(response?.data?.message)
+      if(response.status === 200){
+        useStore.setState({
+          user:{
+            id:response.data.user.id,
+            name:response.data.user.name,
+            email:response.data.user.email,
+            is_verified:response.data.user.is_verified
+          }
+        })
+      }
     } catch (error) {
       console.log(error);
     } finally{

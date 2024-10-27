@@ -1,6 +1,10 @@
+"use client"
+import useStore from "@/store/user";
 import Link from "next/link";
 
-export default async function Header(){
+export default function Header(){
+    const user = useStore.getState().user
+    console.log(user , "user")
     return(
         <>
         <header className="bg-indigo-600 w-full p-5 flex justify-between">
@@ -10,7 +14,7 @@ export default async function Header(){
                 <li>Products</li>
             </ul>
             <div>
-                <Link href={'/login'}>Login</Link>
+                <Link href={'/login'}>{user ? "Logout" : "Login"}</Link>
             </div>
         </header>
         </>
