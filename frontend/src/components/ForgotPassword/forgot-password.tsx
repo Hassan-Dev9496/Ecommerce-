@@ -6,14 +6,13 @@ import { useState } from "react";
 
 export default function ForgotPassword({ isOpen, onClose }:any) {
   const user = useStore.getState().user
-  console.log(user , "user")
   const [email, setEmail] = useState("");
   const handleResetPassword = async () => {
     if (email.trim() === "") {
       return alert("Email must be provided.");
     }
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/forgot-password/", { email });
+      const response = await axios.post("http://127.0.0.1:8000/api/verify-password-email/", { email });
       alert("Password reset link has been sent to your email.");
       onClose();
     } catch (error) {
@@ -21,6 +20,8 @@ export default function ForgotPassword({ isOpen, onClose }:any) {
       alert("Failed to send reset email.");
     }
   };
+
+ 
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

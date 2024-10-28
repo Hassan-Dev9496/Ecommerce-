@@ -7,7 +7,8 @@ class User(models.Model):
     email=models.EmailField(unique=True)
     password=models.TextField()
     is_verified=models.BooleanField(default=False)
-    verification_token=models.UUIDField(default=uuid4 , editable=False , null=True)
+    verification_token=models.UUIDField(default=uuid4 , editable=False , null=True )
+    password_reset_token=models.UUIDField( editable=False , null=True)
 
     def save(self, *args , **kwargs):
         if self.password:
