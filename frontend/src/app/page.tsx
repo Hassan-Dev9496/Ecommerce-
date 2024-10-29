@@ -1,9 +1,9 @@
-import Image from "next/image";
+import HomePage from "@/components/HomePage/home-page";
 
 export default function Home() {
   return (
-    <div className="bg-white">
-     Home
-    </div>
+    <>
+    <HomePage/>
+    </>
   );
 }
