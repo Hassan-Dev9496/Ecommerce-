@@ -9,13 +9,15 @@ export default async function Header(){
     const token = cookieStore.get("token")?.value || null
     return(
         <>
-        <header className="bg-indigo-600 w-full p-5 flex justify-between">
-            <ul className="flex gap-5">
+        <header className=" w-full flex justify-between">
+            <ul className="flex gap-5 bg-[#001ABC] w-1/2 p-5 ">
                 <li><Link href={'/'}>Home</Link></li>
                 <li>About</li>
                 <li>Products</li>
             </ul>
+          <div className="bg-[#A5004A] w-1/2 p-5 flex justify-end">
           <AuthControls token={token}/>
+          </div>
             
         </header>
         </>
