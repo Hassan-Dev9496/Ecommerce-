@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from .models import Shirt 
 from .serializers import ShirtSerializer
 from rest_framework.response import Response
+from rest_framework import status
 
 @api_view(['GET'])
 
@@ -15,3 +16,14 @@ def GetProducts(request):
     
     serializer = ShirtSerializer(products , many=True)
     return Response(data=serializer.data)
+
+
+@api_view(['GET'])
+def GetSingleProduct(request):
+    id = request.query_params.get('id')
+    try:
+        product = Shirt.objects.get(id=id)
+        serializer = ShirtSerializer(product)
+        return Response(data=serializer.data)
+    except Shirt.DoesNotExist:
+        return Response({"error": "Product not found"} , status=status.HTTP_400_BAD_REQUEST)
