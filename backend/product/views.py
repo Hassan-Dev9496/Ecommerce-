@@ -20,9 +20,10 @@ def GetProducts(request):
 
 @api_view(['GET'])
 def GetSingleProduct(request):
-    id = request.query_params.get('id')
+    paramtitle = request.query_params.get('title')
+    adjusted_title = paramtitle.replace("-", " ")
     try:
-        product = Shirt.objects.get(id=id)
+        product = Shirt.objects.get(title=adjusted_title)
         serializer = ShirtSerializer(product)
         return Response(data=serializer.data)
     except Shirt.DoesNotExist:

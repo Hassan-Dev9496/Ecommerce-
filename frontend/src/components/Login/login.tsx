@@ -2,7 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
-import useStore , {IUser} from "@/store/user";
+import useStore  from "@/store/user";
 import {setCookie} from 'cookies-next'
 import { useRouter } from "next/navigation";
 import ForgotPassword from "../ForgotPassword/forgot-password";
@@ -55,6 +55,9 @@ export default function Login() {
       setUser({ email: "", password: "" })
     }
   };
+
+
+
     return (
       <>
         <main className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-white">

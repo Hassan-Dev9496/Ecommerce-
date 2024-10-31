@@ -1,5 +1,7 @@
+"use client"
 import { Images } from "@/utils/Images";
 import Image from "next/image";
+
 
 
 export default function Hero(){
